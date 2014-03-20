@@ -76,7 +76,11 @@ AuRevoirGopher.ActorsRoute = Ember.Route.extend({
 				var actors = data.results;
 				var profile_url = configs.images.secure_base_url + configs.images.profile_sizes[1] + "/";
 				for(var a = 0 ; actors.length > a ; a++){
-					actors[a].profile_image = profile_url + actors[a].profile_path;
+					if(actors[a].profile_path){
+						actors[a].profile_image = profile_url + actors[a].profile_path;
+					}else{
+						actors[a].profile_image = 'images/profile_placeholder.jpg';
+					}
 					actors[a].search_link = "movies";
 				}
 				return actors.sort(popularitySort);
@@ -96,7 +100,11 @@ AuRevoirGopher.MoviesRoute = Ember.Route.extend({
 				var poster_url = configs.images.secure_base_url + configs.images.poster_sizes[1] + "/";
 				var movies = data.cast;
 				for(var m = 0 ; movies.length > m ; m++){
-					movies[m].poster_image = poster_url + movies[m].poster_path;
+					if(movies[m].poster_path){
+						movies[m].poster_image = poster_url + movies[m].poster_path;
+					}else{
+						movies[m].poster_image = 'images/poster_placeholder.jpg';
+					}
 				}
 				return movies.sort(chronSort);
 			} , function(data){
